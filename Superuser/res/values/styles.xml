@@ -52,5 +52,9 @@
 
     <style name="RequestTheme" parent="RequestThemeDark" />
     <style name="Superuser" parent="SuperuserDark" />
-
+    
+    <style name="AboutTheme" parent="Superuser">
+        <item name="iconSize">@android:dimen/app_icon_size</item>
+    </style>
+    
 </resources>
