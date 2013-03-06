@@ -4,19 +4,22 @@
         <item name="android:textColor">?attr/bottomButtonBarText</item>
     </style>
 
-    <color name="background_dark">#1F1F1F</color>
+    <color name="background_dark">#020202</color>
 
-    <style name="PinButton" parent="@android:style/TextAppearance.Large">
+    <style name="PinButtonBase" parent="@android:style/TextAppearance.Large">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">64dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="PinButton" parent="PinButtonBase">
     </style>
 
     <style name="SuperuserDark" parent="@style/AppDarkTheme">
         <item name="bottomButtonBar">@null</item>
         <item name="bottomButtonBarText">?android:attr/textColorPrimary</item>
 
+        <item name="toggleIcon">@drawable/ic_toggle_dark</item>
         <item name="multiuserIcon">@drawable/ic_users_dark</item>
         <item name="declaredPermissionsIcon">@drawable/ic_declare_dark</item>
         <item name="automaticResponseIcon">@drawable/ic_alert_dark</item>
@@ -30,6 +33,7 @@
         <item name="bottomButtonBar">@color/background_dark</item>
         <item name="bottomButtonBarText">?android:attr/textColorPrimaryInverse</item>
 
+        <item name="toggleIcon">@drawable/ic_toggle</item>
         <item name="multiuserIcon">@drawable/ic_users</item>
         <item name="declaredPermissionsIcon">@drawable/ic_declare</item>
         <item name="automaticResponseIcon">@drawable/ic_alert</item>
@@ -50,11 +54,19 @@
     <style name="RequestThemeDark" parent="SuperuserDark" />
     <style name="RequestThemeLight" parent="SuperuserLight" />
 
+    <!-- Want to switch to the dark theme? Change these three styles to Dark. -->
     <style name="RequestTheme" parent="RequestThemeDark" />
     <style name="Superuser" parent="SuperuserDark" />
-    
+    <style name="SuperuserActivity" parent="@style/AppDarkActivityTheme" />
+
+    <style name="AppActivityBaseTheme" parent="SuperuserLight">
+    </style>
+
+    <style name="AppDarkActivityBaseTheme" parent="SuperuserDark">
+    </style>
+
     <style name="AboutTheme" parent="Superuser">
         <item name="iconSize">@android:dimen/app_icon_size</item>
     </style>
-    
+
 </resources>
