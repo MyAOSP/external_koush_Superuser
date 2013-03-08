@@ -170,7 +170,7 @@ public class MainActivity extends BetterListActivity {
                             "rm /system/app/SuperUser.*\n" +
                             "rm /system/app/SuperSU.*\n" +
                             String.format("cat %s > /system/xbin/su\n", su.getAbsolutePath()) +
-                            "chmod 6777 /system/xbin/su\n" +
+                            "chmod 6755 /system/xbin/su\n" +
                             "ln -s /system/xbin/su /system/bin/su\n" +
                             "mount -oro,remount /system\n" +
                             "sync\n";
@@ -232,13 +232,14 @@ public class MainActivity extends BetterListActivity {
     }
     
     // this is intentionally not localized as it will change constantly.
-    private static final String WHATS_NEW = "Fixed PIN Protect crashing on Froyo and Gingerbread.\n\nThe Superuser binary will show a browser message if Superuser was uninstalled and su is broken.";
+    private static final String WHATS_NEW = "Notifications can now be configured per app.\n\nThe Superuser theme can be configured in Settings.";
     protected void doWhatsNew() {
         if (WHATS_NEW.equals(Settings.getString(this, "whats_new")))
             return;
         saveWhatsNew();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.whats_new);
+        builder.setIcon(R.drawable.ic_launcher);
         builder.setMessage(WHATS_NEW);
         builder.setPositiveButton(R.string.rate, new OnClickListener() {
             @Override
@@ -254,6 +255,7 @@ public class MainActivity extends BetterListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Settings.applyDarkThemeSetting(this, R.style.SuperuserDarkActivity);
         super.onCreate(savedInstanceState);
         
         if (Settings.getBoolean(this, "first_run", true)) {
