@@ -63,6 +63,7 @@
 #define REQUESTOR_FILES_PATH REQUESTOR_DATA_PATH REQUESTOR "/files"
 #define REQUESTOR_USER_PATH "/data/user/"
 #define REQUESTOR_CACHE_PATH "/dev/" REQUESTOR
+#define REQUESTOR_DAEMON_PATH REQUESTOR_CACHE_PATH ".daemon"
 
 // there's no guarantee that the db or files are actually created named as such by
 // SQLiteOpenHelper, etc. Though that is the behavior as of current.
@@ -70,18 +71,13 @@
 #define REQUESTOR_DATABASE_PATH REQUESTOR "/databases/su.sqlite"
 #define REQUESTOR_MULTIUSER_MODE REQUESTOR_FILES_PATH "/multiuser_mode"
 
-/* intent actions */
-#define ACTION_REQUEST "start -n " REQUESTOR "/" REQUESTOR_PREFIX ".RequestActivity"
-#define ACTION_NOTIFY "start -n " REQUESTOR "/" REQUESTOR_PREFIX ".NotifyActivity"
-#define ACTION_RESULT "broadcast -n " REQUESTOR "/" REQUESTOR_PREFIX ".SuReceiver"
-
 #define DEFAULT_SHELL "/system/bin/sh"
 
 #define xstr(a) str(a)
 #define str(a) #a
 
 #ifndef VERSION_CODE
-#define VERSION_CODE 9
+#define VERSION_CODE 14
 #endif
 #define VERSION xstr(VERSION_CODE) " " REQUESTOR
 
@@ -159,7 +155,6 @@ extern policy_t database_check(struct su_context *ctx);
 extern void set_identity(unsigned int uid);
 extern int send_request(struct su_context *ctx);
 extern int send_result(struct su_context *ctx, policy_t policy);
-extern int silent_run(char* command);
 
 static inline char *get_command(const struct su_request *to)
 {
@@ -176,6 +171,13 @@ static inline char *get_command(const struct su_request *to)
 void exec_loge(const char* fmt, ...);
 void exec_logw(const char* fmt, ...);
 void exec_logd(const char* fmt, ...);
+
+int run_daemon();
+int connect_daemon(int argc, char *argv[]);
+// for when you give zero fucks about the state of the child process.
+// this version of fork understands you don't care about the child.
+// deadbeat dad fork.
+int fork_zero_fucks();
 
 // fallback to using /system/bin/log.
 // can't use liblog.so because this is a static binary.
